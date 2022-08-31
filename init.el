@@ -7,6 +7,7 @@
 (set-fringe-mode 10) ; Give some breathing room
 (menu-bar-mode -1)   ; Disable the menu bar
 (setq visible-bell t) ; Set up the visible bell
+(setq make-backup-files nil) ; No backup files
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; This makes ESC quit prompts (like ctrl+g)
 ; Fonts 
 (set-frame-font "Consolas 9" nil t)
