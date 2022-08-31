@@ -6,21 +6,22 @@
 (tooltip-mode -1)    ; Disable tooltips
 (set-fringe-mode 10) ; Give some breathing room
 (menu-bar-mode -1)   ; Disable the menu bar
-(setq visible-bell t) ; Set up the visible bell
+(setq visible-bell nil) ; Disable visible bell (flickering)
 (setq make-backup-files nil) ; No backup files
+(blink-cursor-mode 0) ; No blinking cursor
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; This makes ESC quit prompts (like ctrl+g)
 ; Fonts 
 (set-frame-font "Consolas 9" nil t)
 (set-frame-parameter (selected-frame) 'alpha '(97 . 90)) ; Transparency
 (column-number-mode)
-(global-display-line-numbers-mode t)
+(linum-mode t)
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook
 		term-mode-hook
 		shell-mode-hook
 		eshell-mode-hook))
-  (add-hook mode (lambda ( ) (display-line-numbers-mode 0))))
+  (add-hook mode (lambda ( ) (linum-mode 0))))
 
 ;; Initialize package sources
 (require 'package) ; This brings into the environment all the package management functions
@@ -109,3 +110,16 @@
   :init
   (evil-mode 1))
 
+; Smooth scrolling
+(setq scroll-margin 5 scroll-conservatively 0
+scroll-up-aggressively 0.01
+scroll-down-aggressively 0.01)
+(setq scroll-step 1)
+(setq scroll-conservatively 10000)
+(setq auto-window-vscroll nil)
+
+;; Writeroom (Zen mode/Goyo)
+(use-package writeroom-mode)
+
+;; Hide fringe curly arrows 
+(set-fringe-mode 0)
