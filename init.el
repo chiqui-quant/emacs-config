@@ -120,7 +120,8 @@ scroll-down-aggressively 0.01)
 (setq auto-window-vscroll nil)
 
 ;; Writeroom (Zen mode/Goyo)
-(use-package writeroom-mode)
+(use-package writeroom-mode
+  :bind ("M-n" . writeroom-mode)) ;; Toggle writeroom mode with Alt-n
 
 ;; Hide fringe curly arrows 
 (set-fringe-mode 0)
