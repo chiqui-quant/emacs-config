@@ -1,4 +1,5 @@
-(setq default-directory "C:/Users/Chiqui/")
+;; Note: do M-: user-init-file to find the loading path for the init.el file
+(setq default-directory "C:/Users/Chiqui/") ;; Change default directory for emacs
 (setq visible-bell 1)
 (setq inhibit-startup-message t)
 (scroll-bar-mode -1) ; Disable visible scrollbar
@@ -10,6 +11,10 @@
 (setq make-backup-files nil) ; No backup files
 (blink-cursor-mode 0) ; No blinking cursor
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit) ; This makes ESC quit prompts (like ctrl+g)
+(toggle-frame-fullscreen) ; Full screen emacs on startup
+;; (global-hl-line-mode t) ; If you want to highlight the line of the cursor
+
+ 
 ; Fonts 
 (set-frame-font "Consolas 9" nil t)
 (set-frame-parameter (selected-frame) 'alpha '(97 . 90)) ; Transparency
@@ -125,3 +130,4 @@ scroll-down-aggressively 0.01)
 
 ;; Hide fringe curly arrows 
 (set-fringe-mode 0)
+
