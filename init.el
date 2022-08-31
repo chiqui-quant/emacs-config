@@ -14,6 +14,9 @@
 (toggle-frame-fullscreen) ; Full screen emacs on startup
 ;; (global-hl-line-mode t) ; If you want to highlight the line of the cursor
 
+;; Custom Keybindings
+(global-set-key (kbd "M-q") 'kill-buffer-and-window)
+
 ; Fonts 
 (set-frame-font "Consolas 9" nil t)
 (set-frame-parameter (selected-frame) 'alpha '(99 . 90)) ; Transparency
@@ -46,7 +49,7 @@
 (require 'use-package) ; once installed we load it using require
 (setq use-package-always-ensure t) ; because it doesn't ensure packages by default
 
-;; Use Ivy and Counsel for completions (better file navigation and suggested functions)
+;; Use Ivy, Counsel, Whichkey and Helm for completions (better file navigation and suggested functions)
 (use-package ivy
   :diminish
   :bind(("C-s" . swiper)
@@ -65,9 +68,35 @@
   :config
   (ivy-mode 1))
 
+(use-package helm
+    :config
+    (require 'helm-config)
+    :init
+    (helm-mode 1)
+    :bind
+    (("M-x"     . helm-M-x) ;; Evaluate functions
+     ("C-x C-f" . helm-find-files) ;; Open or create files
+     ("C-x b"   . helm-mini) ;; Select buffers
+     ("C-x C-r" . helm-recentf) ;; Select recently saved files
+     ("C-c i"   . helm-imenu) ;; Select document heading
+     ("M-y"     . helm-show-kill-ring) ;; Show the kill ring
+     :map helm-map
+     ("C-z" . helm-select-action)
+     ("<tab>" . helm-execute-persistent-action)))
+
 (use-package general) ; customize key bindings
 (general-define-key
   "C-M-j" 'counsel-switch-buffer) ; key shortcut for switching buffer
+
+(use-package which-key
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 0))
+
+(use-package ivy-rich
+  :init
+  (ivy-rich-mode 1)) ; this displays a description of the functions
 
 (use-package doom-modeline
   :ensure t
@@ -92,23 +121,6 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode)) ; this allows to better distinguish parenthesis
 
-(use-package which-key
-  :init (which-key-mode)
-  :diminish which-key-mode
-  :config
-  (setq which-key-idle-delay 0))
-
-(use-package ivy-rich
-  :init
-  (ivy-rich-mode 1)) ; this displays a description of the functions
-
-(use-package counsel
-  :bind (("M-x" . counsel-M-x)
-	 ("C-x b" . counsel-ibuffer)
-	 ("C-x C-f" . counsel-find-file)
-	 :map minibuffer-local-map
-	 ("C-r" . counsel-minibuffer-history)))
-
 ; Bad boy mode
 (use-package evil
   :ensure t
@@ -129,4 +141,3 @@ scroll-down-aggressively 0.01)
 
 ;; Hide fringe curly arrows 
 (set-fringe-mode 0)
-
