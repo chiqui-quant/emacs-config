@@ -14,10 +14,9 @@
 (toggle-frame-fullscreen) ; Full screen emacs on startup
 ;; (global-hl-line-mode t) ; If you want to highlight the line of the cursor
 
- 
 ; Fonts 
 (set-frame-font "Consolas 9" nil t)
-(set-frame-parameter (selected-frame) 'alpha '(97 . 90)) ; Transparency
+(set-frame-parameter (selected-frame) 'alpha '(99 . 90)) ; Transparency
 (column-number-mode)
 (linum-mode t)
 
@@ -88,7 +87,7 @@
   (beacon-mode 1))
 
 (use-package doom-themes
- :init (load-theme 'doom-old-hope t)); I also like doom-old-hope doom-palenight 
+ :init (load-theme 'doom-one t)); I also like doom-old-hope doom-palenight 
 
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode)) ; this allows to better distinguish parenthesis
