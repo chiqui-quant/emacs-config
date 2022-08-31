@@ -20,7 +20,8 @@
 (dolist (mode '(org-mode-hook
 		term-mode-hook
 		shell-mode-hook
-		eshell-mode-hook))
+		eshell-mode-hook
+		writeroom-mode-hook))
   (add-hook mode (lambda ( ) (linum-mode 0))))
 
 ;; Initialize package sources
