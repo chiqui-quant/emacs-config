@@ -2,6 +2,7 @@
 (setq default-directory "C:/Users/Chiqui/") ;; Change default directory for emacs
 (setq visible-bell 1)
 (setq inhibit-startup-message t)
+(setq use-short-answers t) ;; When emacs asks for "yes" or "no", let "y" or "n" suffice
 (scroll-bar-mode -1) ; Disable visible scrollbar
 (tool-bar-mode -1)   ; Disable the toolbar
 (tooltip-mode -1)    ; Disable tooltips
@@ -20,7 +21,6 @@
 ; Fonts 
 (set-frame-font "Consolas 9" nil t)
 (set-frame-parameter (selected-frame) 'alpha '(99 . 90)) ; Transparency
-(column-number-mode)
 (linum-mode t)
 
 ;; Disable line numbers for some modes
@@ -98,11 +98,30 @@
   :init
   (ivy-rich-mode 1)) ; this displays a description of the functions
 
+(use-package ivy-posframe ;; see minibuffer in the center of the screen
+  ;; :diminish
+  :after ivy
+  :custom
+  (ivy-posframe-width 70)
+  (ivy-posframe-height 15)
+  (ivy-posframe-border-width 2)
+  :config
+  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+  (ivy-posframe-mode 1))
+
+(use-package helm-posframe
+  :config
+  (helm-posframe-enable))
+(setq helm-posframe-width 100)
+		      
+;; Modeline
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
 (setq doom-modeline-height 15); to make it look better we need to download all the  icons (see below)
 (use-package all-the-icons)
+(line-number-mode 0) ;; No line number in the modeline
+(column-number-mode 0) ;; No column number in the modeline
 
 ;;; FANCY STUFF (nyan bar and highlight flash)
 (use-package nyan-mode
@@ -137,7 +156,26 @@ scroll-down-aggressively 0.01)
 
 ;; Writeroom (Zen mode/Goyo)
 (use-package writeroom-mode
-  :bind ("M-n" . writeroom-mode)) ;; Toggle writeroom mode with Alt-n
+  :defer t
+  :bind ("M-n" . writeroom-mode) ;; Toggle writeroom mode with Alt-n
+  :config
+  (setq writeroom-global-effects nil) ;; No need to have Writeroom do any of that silly stuff
+  (setq writeroom-width 110))
 
 ;; Hide fringe curly arrows 
 (set-fringe-mode 0)
+
+;; Dashboard
+(use-package dashboard
+  :ensure t
+  :init
+  (progn
+    (setq dashboard-items '((recents . 5))) ;; number of recent files
+    ;; (setq dashboard-show-shortcuts nil)
+    ;; (setq dashboard-banner-logo-title "Hello")
+    ;; (setq dashboard-center-content t)
+    (setq dashbpard-set-file-icons t)
+    (setq dashboard-set-heading-icons t))
+    ;; (setq dashboard-startup-banner "tilde/Downloads/image.png")
+    :config
+    (dashboard-setup-startup-hook))
