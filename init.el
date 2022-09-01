@@ -1,6 +1,5 @@
 ;; Note: do M-: user-init-file to find the loading path for the init.el file
 (setq default-directory "C:/Users/Chiqui/") ;; Change default directory for emacs
-(setq visible-bell 1)
 (setq inhibit-startup-message t)
 (setq use-short-answers t) ;; When emacs asks for "yes" or "no", let "y" or "n" suffice
 (scroll-bar-mode -1) ; Disable visible scrollbar
