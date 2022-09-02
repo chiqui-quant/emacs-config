@@ -1,4 +1,6 @@
 ;; Note: do M-: user-init-file to find the loading path for the init.el file
+;; M-x auto-revert-mode - refresh the buffer when underlying file is modified on disk
+;; M-X auto-revert-tail-mode - same, but maintain view of end of buffer in window
 (setq default-directory "C:/Users/Chiqui/") ;; Change default directory for emacs
 (setq inhibit-startup-message t)
 (setq use-short-answers t) ;; When emacs asks for "yes" or "no", let "y" or "n" suffice
@@ -83,6 +85,7 @@
      ("C-z" . helm-select-action)
      ("<tab>" . helm-execute-persistent-action)))
 
+
 (use-package general) ; customize key bindings
 (general-define-key
   "C-M-j" 'counsel-switch-buffer) ; key shortcut for switching buffer
@@ -112,7 +115,36 @@
   :config
   (helm-posframe-enable))
 (setq helm-posframe-width 100)
-		      
+
+;; Ido
+(setq ido-enable-flex-matching t)
+(ido-mode 1)
+
+;; Projectile (fzf)
+(use-package projectile
+  :ensure t
+  :config
+  (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+  (projectile-mode +1))
+
+(use-package helm-projectile
+  :ensure t
+  :config (helm-projectile-on))
+
+;; (defvar default-ecb-source-path (list '("c/Users/Chiqui" "Workspace")
+;; 								 '("~/" "~/")
+;; 								 '("/" "/")))
+
+;; (add-hook 'ecb-basic-buffer-sync-hook
+;; 		  (lambda ()
+;; 			(when (functionp 'projectile-get-project-directories)
+;; 			  (when (projectile-project-p)
+;; 				(dolist (path-dir (projectile-get-project-directories))
+;; 				  (unless (member (list path-dir path-dir) default-ecb-source-path)
+;; 					(push (list path-dir path-dir) default-ecb-source-path)
+;; 					(customize-set-variable 'ecb-source-path default-ecb-source-path)
+;; 					))))))
+
 ;; Modeline
 (use-package doom-modeline
   :ensure t
@@ -139,7 +171,7 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode)) ; this allows to better distinguish parenthesis
 
-; Bad boy mode
+; Vim mode
 (use-package evil
   :ensure t
   :init
@@ -178,3 +210,24 @@ scroll-down-aggressively 0.01)
     ;; (setq dashboard-startup-banner "tilde/Downloads/image.png")
     :config
     (dashboard-setup-startup-hook))
+
+;; Snippets
+(use-package yasnippet
+  :ensure t
+  :init
+  (yas-global-mode 1))
+
+(add-to-list 'load-path
+              "~/.emacs.d/plugins/yasnippet")
+
+(defun my-yas-try-expanding-auto-snippets ()
+(when (and (boundp 'yas-minor-mode) yas-minor-mode)
+    (let ((yas-buffer-local-condition ''(require-snippet-condition . auto)))
+    (yas-expand))))
+(add-hook 'post-command-hook #'my-yas-try-expanding-auto-snippets)
+
+;; Hungry delete
+(use-package hungry-delete
+  :ensure t
+  :config
+  (global-hungry-delete-mode))
